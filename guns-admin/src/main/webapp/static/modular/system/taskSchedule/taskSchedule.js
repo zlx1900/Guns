@@ -22,10 +22,7 @@ TaskSchedule.initColumn = function () {
             {title: '类路径', field: 'beanClass', visible: true, align: 'center', valign: 'middle'},
             {title: '是否同步', field: 'isConcurrent', visible: true, align: 'center', valign: 'middle'},
             {title: 'spring_id', field: 'springId', visible: true, align: 'center', valign: 'middle'},
-            {title: '方法名', field: 'methodName', visible: true, align: 'center', valign: 'middle'},
-            {title: '最后一次执行开始时间', field: 'lastStartTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '最后一次执行结束时间', field: 'lastEndTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'}
+            {title: '方法名', field: 'methodName', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 

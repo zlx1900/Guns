@@ -1,6 +1,13 @@
 package com.stylefeng.guns.modular.system.controller;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
+import com.stylefeng.guns.core.exception.GunsException;
+import com.stylefeng.guns.core.util.SpringUtils;
+import com.stylefeng.guns.modular.task.bean.TaskScheduleBean;
+import org.apache.commons.lang.StringUtils;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.SchedulerException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +18,7 @@ import com.stylefeng.guns.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.TaskSchedule;
 import com.stylefeng.guns.modular.system.service.ITaskScheduleService;
+import java.lang.reflect.Method;
 
 /**
  * 任务管理控制器
@@ -26,6 +34,9 @@ public class TaskScheduleController extends BaseController {
 
     @Autowired
     private ITaskScheduleService taskScheduleService;
+
+    @Autowired
+    private TaskScheduleBean taskScheduleBean;
 
     /**
      * 跳转到任务管理首页
@@ -49,7 +60,7 @@ public class TaskScheduleController extends BaseController {
     @RequestMapping("/taskSchedule_update/{taskScheduleId}")
     public String taskScheduleUpdate(@PathVariable Integer taskScheduleId, Model model) {
         TaskSchedule taskSchedule = taskScheduleService.selectById(taskScheduleId);
-        model.addAttribute("item",taskSchedule);
+        model.addAttribute("item", taskSchedule);
         LogObjectHolder.me().set(taskSchedule);
         return PREFIX + "taskSchedule_edit.html";
     }
@@ -68,7 +79,31 @@ public class TaskScheduleController extends BaseController {
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    public Object add(TaskSchedule taskSchedule) {
+    public Object add(TaskSchedule taskSchedule) throws Exception {
+        try {
+            CronScheduleBuilder.cronSchedule(taskSchedule.getCronExpression());
+        } catch (Exception e) {
+            throw new GunsException(BizExceptionEnum.TASK_CRON_EXPRESSION_ERROR);
+        }
+
+        Object obj = null;
+        if (StringUtils.isNotBlank(taskSchedule.getSpringId())) {
+            obj = SpringUtils.getBean(taskSchedule.getSpringId());
+        } else {
+            Class clazz = Class.forName(taskSchedule.getBeanClass());
+            obj = clazz.newInstance();
+        }
+        if (obj == null) {
+            throw new GunsException(BizExceptionEnum.TASK_CLASS_NO_FIND_ERROR);
+        }
+
+        Class clazz = obj.getClass();
+        Method method = clazz.getMethod(taskSchedule.getMethodName(), null);
+        if (method == null) {
+            throw new GunsException(BizExceptionEnum.TASK_METHOD_NO_FIND_ERROR);
+        }
+
+        taskScheduleBean.addJob(taskSchedule);
         taskScheduleService.insert(taskSchedule);
         return SUCCESS_TIP;
     }
@@ -78,7 +113,9 @@ public class TaskScheduleController extends BaseController {
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Object delete(@RequestParam Integer taskScheduleId) {
+    public Object delete(@RequestParam Integer taskScheduleId) throws SchedulerException {
+        TaskSchedule taskSchedule = taskScheduleService.selectById(taskScheduleId);
+        taskScheduleBean.deleteJob(taskSchedule);
         taskScheduleService.deleteById(taskScheduleId);
         return SUCCESS_TIP;
     }
@@ -88,7 +125,8 @@ public class TaskScheduleController extends BaseController {
      */
     @RequestMapping(value = "/update")
     @ResponseBody
-    public Object update(TaskSchedule taskSchedule) {
+    public Object update(TaskSchedule taskSchedule) throws SchedulerException {
+        taskScheduleBean.updateCron(taskSchedule.getJobId(), taskSchedule.getCronExpression());
         taskScheduleService.updateById(taskSchedule);
         return SUCCESS_TIP;
     }

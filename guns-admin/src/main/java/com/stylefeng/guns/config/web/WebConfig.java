@@ -19,6 +19,7 @@ import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -160,5 +161,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
+    }
+
+    @Bean
+    public SchedulerFactoryBean schedulerFactoryBean(){
+        return new SchedulerFactoryBean();
     }
 }

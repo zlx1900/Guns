@@ -30,7 +30,7 @@ public class TaskSchedule extends Model<TaskSchedule> {
     @TableField("job_group")
     private String jobGroup;
     @TableField("job_status")
-    private String jobStatus;
+    private Integer jobStatus;
     @TableField("cron_expression")
     private String cronExpression;
     private String description;
@@ -40,7 +40,7 @@ public class TaskSchedule extends Model<TaskSchedule> {
      * 1
      */
     @TableField("is_concurrent")
-    private String isConcurrent;
+    private Integer isConcurrent;
     @TableField("spring_id")
     private String springId;
     @TableField("method_name")
@@ -85,11 +85,11 @@ public class TaskSchedule extends Model<TaskSchedule> {
         this.jobGroup = jobGroup;
     }
 
-    public String getJobStatus() {
+    public Integer getJobStatus() {
         return jobStatus;
     }
 
-    public void setJobStatus(String jobStatus) {
+    public void setJobStatus(Integer jobStatus) {
         this.jobStatus = jobStatus;
     }
 
@@ -117,11 +117,11 @@ public class TaskSchedule extends Model<TaskSchedule> {
         this.beanClass = beanClass;
     }
 
-    public String getIsConcurrent() {
+    public Integer getIsConcurrent() {
         return isConcurrent;
     }
 
-    public void setIsConcurrent(String isConcurrent) {
+    public void setIsConcurrent(Integer isConcurrent) {
         this.isConcurrent = isConcurrent;
     }
 

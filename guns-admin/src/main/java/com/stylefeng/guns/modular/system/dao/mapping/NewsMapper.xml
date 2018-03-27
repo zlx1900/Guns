@@ -6,18 +6,29 @@
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.News">
         <id column="id" property="id" />
         <result column="title" property="title" />
-        <result column="content" property="content" />
+        <result column="title_md5" property="titleMd5" />
+        <!--<result column="content" property="content" />-->
         <result column="publish_time" property="publishTime" />
         <result column="short_content" property="shortContent" />
+        <result column="small_image" property="smallImage" />
         <result column="source" property="source" />
         <result column="source_url" property="sourceUrl" />
         <result column="create_time" property="createTime" />
-        <result column="is_delete" property="isDelete" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, content, publish_time AS publishTime, short_content AS shortContent, source, source_url AS sourceUrl, create_time AS createTime, is_delete AS isDelete
+        id, title, title_md5 AS titleMd5, publish_time AS publishTime, short_content AS shortContent, small_image AS smallImage,source, source_url AS sourceUrl, create_time AS createTime
     </sql>
+
+    <select id="countByTitleMd5" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM sys_news
+        WHERE title_md5 = #{titleMd5}
+    </select>
+
+    <select id="getContentById" resultType="java.lang.String">
+        SELECT content FROM sys_news
+        WHERE id = #{id}
+    </select>
 
 </mapper>

@@ -1,15 +1,12 @@
 package com.stylefeng.guns.modular.system.model;
 
 import java.io.Serializable;
-
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
-import java.sql.Blob;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
-import java.io.Serializable;
 
 /**
  * <p>
@@ -31,6 +28,11 @@ public class News extends Model<News> {
      */
     private String title;
     /**
+     * 标题md5
+     */
+    @TableField("title_md5")
+    private String titleMd5;
+    /**
      * 内容
      */
     private String content;
@@ -45,6 +47,11 @@ public class News extends Model<News> {
     @TableField("short_content")
     private String shortContent;
     /**
+     * 图片
+     */
+    @TableField("small_image")
+    private String smallImage;
+    /**
      * 来源
      */
     private String source;
@@ -58,12 +65,6 @@ public class News extends Model<News> {
      */
     @TableField("create_time")
     private Date createTime;
-    /**
-     * 是否删除
-     */
-    @TableField("is_delete")
-    private Integer isDelete;
-
 
     public Integer getId() {
         return id;
@@ -129,12 +130,20 @@ public class News extends Model<News> {
         this.createTime = createTime;
     }
 
-    public Integer getIsDelete() {
-        return isDelete;
+    public String getTitleMd5() {
+        return titleMd5;
     }
 
-    public void setIsDelete(Integer isDelete) {
-        this.isDelete = isDelete;
+    public void setTitleMd5(String titleMd5) {
+        this.titleMd5 = titleMd5;
+    }
+
+    public String getSmallImage() {
+        return smallImage;
+    }
+
+    public void setSmallImage(String smallImage) {
+        this.smallImage = smallImage;
     }
 
     @Override
@@ -147,13 +156,14 @@ public class News extends Model<News> {
         return "News{" +
         "id=" + id +
         ", title=" + title +
+        ", titleMd5=" + titleMd5 +
         ", content=" + content +
         ", publishTime=" + publishTime +
         ", shortContent=" + shortContent +
+        ", smallImage=" + smallImage +
         ", source=" + source +
         ", sourceUrl=" + sourceUrl +
         ", createTime=" + createTime +
-        ", isDelete=" + isDelete +
         "}";
     }
 }
