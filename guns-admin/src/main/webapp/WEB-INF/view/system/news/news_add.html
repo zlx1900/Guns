@@ -1,0 +1,36 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" underline="true"/>
+                            <#input id="title" name="标题" underline="true"/>
+                            <#input id="content" name="内容" underline="true"/>
+                            <#input id="publishTime" name="发布时间" underline="true"/>
+                            <#input id="shortContent" name="内容简介"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="source" name="来源" underline="true"/>
+                            <#input id="sourceUrl" name="来源链接" underline="true"/>
+                            <#input id="createTime" name="创建时间" underline="true"/>
+                            <#input id="isDelete" name="是否删除" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="NewsInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="NewsInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/news/news_info.js"></script>
+@}

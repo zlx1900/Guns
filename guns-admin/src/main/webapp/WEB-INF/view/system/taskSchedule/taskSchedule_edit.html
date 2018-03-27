@@ -1,0 +1,36 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <input type="hidden" id="id" value="${item.id}">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="jobName" name="名称" value="${item.jobName}" underline="true"/>
+                            <#input id="jobGroup" name="group" value="${item.jobGroup}" underline="true"/>
+                            <#input id="cronExpression" name="表达式" value="${item.cronExpression}" underline="true"/>
+                            <#input id="beanClass" name="类路径" value="${item.beanClass}" />
+                            <#input id="methodName" name="方法名" value="${item.methodName}" underline="true"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="isConcurrent" name="是否同步" value="${item.isConcurrent}" underline="true"/>
+                            <#input id="jobStatus" name="状态" value="${item.jobStatus}" underline="true"/>
+                            <#input id="springId" name="spring_id" value="${item.springId}" underline="true"/>
+                            <#input id="description" name="描述" value="${item.description}" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="TaskScheduleInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="TaskScheduleInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/taskSchedule/taskSchedule_info.js"></script>
+@}
