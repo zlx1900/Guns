@@ -23,8 +23,8 @@ public class TaskSchedule extends Model<TaskSchedule> {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "job_id", type = IdType.AUTO)
-    private Integer jobId;
+    @TableId(type = IdType.AUTO)
+    private Integer id;
     @TableField("job_name")
     private String jobName;
     @TableField("job_group")
@@ -37,7 +37,7 @@ public class TaskSchedule extends Model<TaskSchedule> {
     @TableField("bean_class")
     private String beanClass;
     /**
-     * 1
+     * 是否同步 1同步 0不同步
      */
     @TableField("is_concurrent")
     private Integer isConcurrent;
@@ -61,12 +61,12 @@ public class TaskSchedule extends Model<TaskSchedule> {
     private Date updateTime;
 
 
-    public Integer getJobId() {
-        return jobId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setJobId(Integer jobId) {
-        this.jobId = jobId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getJobName() {
@@ -175,13 +175,13 @@ public class TaskSchedule extends Model<TaskSchedule> {
 
     @Override
     protected Serializable pkVal() {
-        return this.jobId;
+        return this.id;
     }
 
     @Override
     public String toString() {
         return "TaskSchedule{" +
-        "jobId=" + jobId +
+        "id=" + id +
         ", jobName=" + jobName +
         ", jobGroup=" + jobGroup +
         ", jobStatus=" + jobStatus +

@@ -16,13 +16,10 @@ News.initColumn = function () {
         {field: 'selectItem', radio: true},
             {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '标题', field: 'title', visible: true, align: 'center', valign: 'middle'},
-            {title: '内容', field: 'content', visible: true, align: 'center', valign: 'middle'},
             {title: '发布时间', field: 'publishTime', visible: true, align: 'center', valign: 'middle'},
             {title: '内容简介', field: 'shortContent', visible: true, align: 'center', valign: 'middle'},
             {title: '来源', field: 'source', visible: true, align: 'center', valign: 'middle'},
-            {title: '来源链接', field: 'sourceUrl', visible: true, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '是否删除', field: 'isDelete', visible: true, align: 'center', valign: 'middle'}
+            {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 

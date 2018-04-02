@@ -48,7 +48,8 @@ public class NewsController extends BaseController {
      */
     @RequestMapping("/news_update/{newsId}")
     public String newsUpdate(@PathVariable Integer newsId, Model model) {
-        News news = newsService.selectById(newsId);
+        News news = newsService.getById(newsId);
+        news.setContent(null);
         model.addAttribute("item",news);
         LogObjectHolder.me().set(news);
         return PREFIX + "news_edit.html";

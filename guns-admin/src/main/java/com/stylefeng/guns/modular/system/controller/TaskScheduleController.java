@@ -126,7 +126,7 @@ public class TaskScheduleController extends BaseController {
     @RequestMapping(value = "/update")
     @ResponseBody
     public Object update(TaskSchedule taskSchedule) throws SchedulerException {
-        taskScheduleBean.updateCron(taskSchedule.getJobId(), taskSchedule.getCronExpression());
+        taskScheduleBean.updateCron(taskSchedule.getId(), taskSchedule.getCronExpression());
         taskScheduleService.updateById(taskSchedule);
         return SUCCESS_TIP;
     }

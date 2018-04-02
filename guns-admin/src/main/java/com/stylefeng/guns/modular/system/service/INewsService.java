@@ -12,17 +12,13 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2018-03-27
  */
 public interface INewsService extends IService<News> {
+
+    News getById(Integer id);
+
     /**
      * 根据标题md5获取新闻条数
      * @param titleMd5
      * @return
      */
     int countByTitleMd5(String titleMd5);
-
-    /**
-     * 获取新闻内容
-     * @param id
-     * @return
-     */
-    String getContentById(Integer id);
 }

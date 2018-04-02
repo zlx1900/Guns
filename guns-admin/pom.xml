@@ -10,10 +10,8 @@
     </parent>
 
     <artifactId>guns-admin</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-
     <packaging>war</packaging>
-
+    <version>1.0.0-SNAPSHOT</version>
     <name>guns-admin</name>
     <description>guns 的spring boot版本</description>
 
@@ -93,6 +91,12 @@
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-core</artifactId>
             <version>0.7.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>us.codecraft</groupId>
@@ -128,6 +132,11 @@
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
         </dependency>
 
         <!--   需要分布式session的话需要放开注释

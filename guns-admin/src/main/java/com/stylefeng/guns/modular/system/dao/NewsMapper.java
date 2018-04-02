@@ -19,10 +19,5 @@ public interface NewsMapper extends BaseMapper<News> {
      */
     int countByTitleMd5(String titleMd5);
 
-    /**
-     * 获取新闻内容
-     * @param id
-     * @return
-     */
-    String getContentById(Integer id);
+    News getById(Integer id);
 }

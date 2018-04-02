@@ -7,7 +7,7 @@
         <id column="id" property="id" />
         <result column="title" property="title" />
         <result column="title_md5" property="titleMd5" />
-        <!--<result column="content" property="content" />-->
+        <result column="content" property="content" typeHandler="com.stylefeng.guns.core.intercept.MyBlobTypeHandler"/>
         <result column="publish_time" property="publishTime" />
         <result column="short_content" property="shortContent" />
         <result column="small_image" property="smallImage" />
@@ -18,7 +18,11 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, title_md5 AS titleMd5, publish_time AS publishTime, short_content AS shortContent, small_image AS smallImage,source, source_url AS sourceUrl, create_time AS createTime
+        id, title, title_md5 AS titleMd5, content, publish_time AS publishTime, short_content AS shortContent, small_image AS smallImage,source, source_url AS sourceUrl, create_time AS createTime
+    </sql>
+
+    <sql id="Base_Column_List_No_AS">
+        id, title, title_md5, content, publish_time, short_content, small_image,source, source_url, create_time
     </sql>
 
     <select id="countByTitleMd5" resultType="java.lang.Integer">
@@ -26,8 +30,9 @@
         WHERE title_md5 = #{titleMd5}
     </select>
 
-    <select id="getContentById" resultType="java.lang.String">
-        SELECT content FROM sys_news
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List_No_AS"/>
+        FROM sys_news
         WHERE id = #{id}
     </select>
 

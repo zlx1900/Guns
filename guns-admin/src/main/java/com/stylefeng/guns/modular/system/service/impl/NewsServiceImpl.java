@@ -23,12 +23,12 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements IN
     private NewsMapper newsMapper;
 
     @Override
-    public int countByTitleMd5(String titleMd5) {
-        return newsMapper.countByTitleMd5(titleMd5);
+    public News getById(Integer id) {
+        return newsMapper.getById(id);
     }
 
     @Override
-    public String getContentById(Integer id) {
-        return newsMapper.getContentById(id);
+    public int countByTitleMd5(String titleMd5) {
+        return newsMapper.countByTitleMd5(titleMd5);
     }
 }
