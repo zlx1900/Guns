@@ -1,6 +1,9 @@
 package com.stylefeng.guns.modular.system.controller;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.modular.system.model.OperationLog;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +14,8 @@ import com.stylefeng.guns.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.News;
 import com.stylefeng.guns.modular.system.service.INewsService;
+
+import java.util.List;
 
 /**
  * 新闻管理控制器
@@ -60,8 +65,9 @@ public class NewsController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return newsService.selectList(null);
+    public Object list() {
+        Page<News> page = new PageFactory<News>().defaultPage();
+        return super.packForBT(newsService.selectPage(page));
     }
 
     /**

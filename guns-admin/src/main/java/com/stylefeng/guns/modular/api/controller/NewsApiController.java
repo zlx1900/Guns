@@ -1,6 +1,8 @@
 package com.stylefeng.guns.modular.api.controller;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.modular.system.model.News;
 import com.stylefeng.guns.modular.system.service.INewsService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -39,10 +41,12 @@ public class NewsApiController extends BaseController {
      * 获取新闻管理列表
      */
     @ApiOperation("获取新闻管理列表")
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list/{current}/{size}", method = RequestMethod.GET)
     @ResponseBody
-    public Object list() {
-        return newsService.selectList(null);
+    public Object list(@ApiParam(required=true, name="current", value="当前页") @PathVariable(value = "current") Integer current,
+                       @ApiParam(required=true, name="size", value="每页显示条数") @PathVariable(value = "size") Integer size) {
+        Page<News> page = new Page<>(current, size);
+        return newsService.selectPage(page).getRecords();
     }
 
 

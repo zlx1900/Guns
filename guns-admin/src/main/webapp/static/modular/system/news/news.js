@@ -97,6 +97,6 @@ News.search = function () {
 $(function () {
     var defaultColunms = News.initColumn();
     var table = new BSTable(News.id, "/news/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     News.table = table.init();
 });
