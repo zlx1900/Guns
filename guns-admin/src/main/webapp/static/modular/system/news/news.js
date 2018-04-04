@@ -98,5 +98,6 @@ $(function () {
     var defaultColunms = News.initColumn();
     var table = new BSTable(News.id, "/news/list", defaultColunms);
     table.setPaginationType("server");
+    table.setHeight(1000);
     News.table = table.init();
 });

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 新闻API
  *
@@ -46,7 +48,11 @@ public class NewsApiController extends BaseController {
     public Object list(@ApiParam(required=true, name="current", value="当前页") @PathVariable(value = "current") Integer current,
                        @ApiParam(required=true, name="size", value="每页显示条数") @PathVariable(value = "size") Integer size) {
         Page<News> page = new Page<>(current, size);
-        return newsService.selectPage(page).getRecords();
+        List<News> newsList = newsService.selectPage(page).getRecords();
+        for(News news : newsList){
+            news.setContent(null);
+        }
+        return newsList;
     }
 
 
