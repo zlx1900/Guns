@@ -4,6 +4,7 @@ import com.stylefeng.guns.core.util.DateUtil;
 import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.modular.system.model.News;
 import com.stylefeng.guns.modular.system.service.INewsService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
@@ -62,8 +63,16 @@ public class CnblogsSpider implements PageProcessor {
             String titleMd5 = MD5Util.encrypt(page.getHtml().xpath("//*[@id='news_title']/a/text()").get());
             if (newsMap.containsKey(titleMd5)){
                 News news = newsMap.get(titleMd5);
-                news.setSourceUrl(page.getHtml().xpath("//*[@id=\"link_source1\"]/@href").get());
-                news.setSource(page.getHtml().xpath("//*[@id='link_source2']/text()").get());
+
+                String source = page.getHtml().xpath("//*[@id='link_source2']/text()").get();
+                if (StringUtils.isNotBlank(source)){
+                    news.setSource(source);
+                    news.setSourceUrl(page.getHtml().xpath("//*[@id=\"link_source1\"]/@href").get());
+                }
+                else{
+                    news.setSource("博客园");
+                    news.setSourceUrl(page.getUrl().get());
+                }
 
                 String content = page.getHtml().xpath("//*[@id='news_body']").get().replace("<div id=\"news_body\"> \n", "").replace("</div>", "");
                 List<String> imgUrlList = page.getHtml().xpath("//*[@id='news_body']/p/img/@src").all();
@@ -83,6 +92,11 @@ public class CnblogsSpider implements PageProcessor {
         return site;
     }
 
+    /**
+     * 把博客园的图片转换为自己服务器作转发
+     * @param cnblogUrl
+     * @return
+     */
     private String tranImageUrl(String cnblogUrl){
         if (cnblogUrl == null){
             return null;

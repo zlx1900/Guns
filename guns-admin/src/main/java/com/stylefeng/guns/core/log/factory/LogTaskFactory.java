@@ -99,4 +99,19 @@ public class LogTaskFactory {
             }
         };
     }
+
+    public static TimerTask wxLoginLog(final String msg, final String ip) {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                LoginLog loginLog = LogFactory.createLoginLog(
+                        LogType.WX_LOGIN, null, msg, ip);
+                try {
+                    loginLogMapper.insert(loginLog);
+                } catch (Exception e) {
+                    logger.error("创建小程序登录失败异常!", e);
+                }
+            }
+        };
+    }
 }

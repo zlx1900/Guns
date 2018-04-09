@@ -8,6 +8,7 @@ package com.stylefeng.guns.core.common.constant.state;
  */
 public enum LogType {
 
+    WX_LOGIN("小程序登录日志"),
     LOGIN("登录日志"),
     LOGIN_FAIL("登录失败日志"),
     EXIT("退出日志"),

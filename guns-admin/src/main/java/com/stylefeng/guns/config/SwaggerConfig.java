@@ -20,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-@ConditionalOnProperty(prefix = "guns", name = "swagger-open", havingValue = "true")
+@ConditionalOnProperty(prefix = "alex", name = "swagger-open", havingValue = "true")
 public class SwaggerConfig{
 
     @Bean
@@ -36,10 +36,10 @@ public class SwaggerConfig{
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Guns Doc")
-                .description("Guns Api文档")
-                .termsOfServiceUrl("http://git.oschina.net/naan1993/guns")
-                .contact("stylefeng")
+                .title("Alex_Admin Doc")
+                .description("Alex_Admin Api文档")
+                .termsOfServiceUrl("https://www.alexzlx.com")
+                .contact("alex")
                 .version("2.0")
                 .build();
     }
