@@ -39,7 +39,7 @@ public class CnblogsSpider implements PageProcessor {
                         news.setTitle(title);
                         news.setTitleMd5(titleMd5);
                         news.setShortContent(selectable.xpath("//*[@class='post_item_summary']/text()").get());
-                        news.setSmallImage("https:" + selectable.xpath("//*[@class='post_item_summary']/a/img/@src").get());
+                        news.setSmallImage(tranImageUrl(selectable.xpath("//*[@class='post_item_summary']/a/img/@src").get()));
 
                         String publishTime = selectable.xpath("//*[@class='post_item_foot']/text()").get().trim();
                         publishTime = publishTime.substring(publishTime.indexOf("2"), publishTime.length()) + ":00";
@@ -62,9 +62,16 @@ public class CnblogsSpider implements PageProcessor {
             String titleMd5 = MD5Util.encrypt(page.getHtml().xpath("//*[@id='news_title']/a/text()").get());
             if (newsMap.containsKey(titleMd5)){
                 News news = newsMap.get(titleMd5);
-                news.setContent(page.getHtml().xpath("//*[@id='news_body']").get().replace("<div id=\"news_body\"> \n", "").replace("</div>", ""));
                 news.setSourceUrl(page.getHtml().xpath("//*[@id=\"link_source1\"]/@href").get());
                 news.setSource(page.getHtml().xpath("//*[@id='link_source2']/text()").get());
+
+                String content = page.getHtml().xpath("//*[@id='news_body']").get().replace("<div id=\"news_body\"> \n", "").replace("</div>", "");
+                List<String> imgUrlList = page.getHtml().xpath("//*[@id='news_body']/p/img/@src").all();
+                for(String imgUrl : imgUrlList){
+                    content = content.replace(imgUrl, tranImageUrl(imgUrl));
+                }
+                news.setContent(content);
+
                 newsService.insert(news);
                 newsMap.remove(titleMd5);
             }
@@ -74,6 +81,20 @@ public class CnblogsSpider implements PageProcessor {
 
     public Site getSite() {
         return site;
+    }
+
+    private String tranImageUrl(String cnblogUrl){
+        if (cnblogUrl == null){
+            return null;
+        }
+
+        StringBuilder newUrl = new StringBuilder();
+        newUrl.append("https://www.alexzlx.com/forward/");
+        newUrl.append(cnblogUrl.substring(cnblogUrl.indexOf("//") + 2, cnblogUrl.indexOf(".")));
+        newUrl.append("/p/");
+        newUrl.append(cnblogUrl.substring(cnblogUrl.indexOf("com/") + 4));
+
+        return newUrl.toString();
     }
 
     public static void main(String[] args) {

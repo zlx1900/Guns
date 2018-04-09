@@ -47,7 +47,7 @@ public class NewsApiController extends BaseController {
     @ResponseBody
     public Object list(@ApiParam(required=true, name="current", value="当前页") @PathVariable(value = "current") Integer current,
                        @ApiParam(required=true, name="size", value="每页显示条数") @PathVariable(value = "size") Integer size) {
-        Page<News> page = new Page<>(current, size);
+        Page<News> page = new Page<>(current, size, "id", false);
         List<News> newsList = newsService.selectPage(page).getRecords();
         for(News news : newsList){
             news.setContent(null);
